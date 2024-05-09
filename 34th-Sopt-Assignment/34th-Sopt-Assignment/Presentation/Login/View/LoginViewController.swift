@@ -8,6 +8,8 @@
 import Then
 import UIKit
 import SnapKit
+import Combine
+import CombineCocoa
 
 final class LoginViewController: UIViewController, RegexCheckable, AlertShowable {
     
@@ -45,6 +47,8 @@ final class LoginViewController: UIViewController, RegexCheckable, AlertShowable
     
     private let viewModel: LoginViewModel
     
+    private var anyCancellables = Set<AnyCancellable>()
+    
     private var nickname: String?
     
     // MARK: - Initializer
@@ -67,6 +71,8 @@ final class LoginViewController: UIViewController, RegexCheckable, AlertShowable
         setViewHierarchy()
         setAutoLayout()
         setDelegate()
+        
+        configureViewModel()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -170,6 +176,36 @@ final class LoginViewController: UIViewController, RegexCheckable, AlertShowable
             sheet.preferredCornerRadius = 24
         }
         present(viewController, animated: true)
+    }
+}
+
+// MARK: - Configure Method
+
+private extension LoginViewController {
+    func configureViewModel() {
+        viewModel
+            .isLoginButtonEnabled
+            .sink { completion in
+                print(completion)
+            } receiveValue: { [weak self] flag in
+                guard let self else { return }
+                toggleLoginButton(flag)
+            }
+            .store(in: &anyCancellables)
+
+        idTextField
+            .textPublisher
+            .receive(on: RunLoop.main)
+            .map { $0 ?? "" }
+            .assign(to: \.idInput, on: viewModel)
+            .store(in: &anyCancellables)
+        
+        pwTextField
+            .textPublisher
+            .receive(on: RunLoop.main)
+            .map { $0 ?? "" }
+            .assign(to: \.pwInput, on: viewModel)
+            .store(in: &anyCancellables)
     }
 }
 
