@@ -1,6 +1,15 @@
 {
-  "originHash" : "c4346f38a1062375f708fef53cc6bf388d783cd4f706e82bee303bfde1d89b70",
+  "originHash" : "0918cec3805c949fc66abc29e2d59de9829501e62728ebecb2f06743c80ec158",
   "pins" : [
+    {
+      "identity" : "combinecocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/CombineCommunity/CombineCocoa.git",
+      "state" : {
+        "revision" : "7300c75ff9e072aa7fd0fccefcc88f74aae9bf56",
+        "version" : "0.4.1"
+      }
+    },
     {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
