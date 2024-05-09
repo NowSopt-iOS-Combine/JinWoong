@@ -207,7 +207,7 @@ private extension LoginViewController {
         
         idTextField.do {
             $0.rightView = idTextFieldRightView
-            $0.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+//            $0.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         }
         
         idClearButton.do {
@@ -218,7 +218,7 @@ private extension LoginViewController {
         
         pwTextField.do {
             $0.rightView = pwTextFieldRightView
-            $0.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+//            $0.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         }
         
         pwShowButton.do {
