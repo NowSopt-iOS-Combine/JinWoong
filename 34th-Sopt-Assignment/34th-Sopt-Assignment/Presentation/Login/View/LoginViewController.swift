@@ -43,7 +43,20 @@ final class LoginViewController: UIViewController, RegexCheckable, AlertShowable
     
     // MARK: - Property
     
+    private let viewModel: LoginViewModel
+    
     private var nickname: String?
+    
+    // MARK: - Initializer
+    
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycle
     
