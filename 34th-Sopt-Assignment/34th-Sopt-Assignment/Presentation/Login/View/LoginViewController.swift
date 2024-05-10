@@ -86,17 +86,6 @@ final class LoginViewController: UIViewController, RegexCheckable, AlertShowable
     
     // MARK: - Action
     
-    @objc
-    private func textFieldEditingChanged(_ sender: UITextField) {
-        var flag = false
-        
-        if let idInput = idTextField.text, !idInput.isEmpty,
-           let pwInput = pwTextField.text, !pwInput.isEmpty {
-            flag = true
-        }
-        toggleLoginButton(flag)
-    }
-    
     private func toggleLoginButton(_ flag: Bool) {
         let borderWidth: CGFloat = flag ? 0 : 1
         let titleColor: UIColor = flag ? .white : .gray2
@@ -143,7 +132,6 @@ final class LoginViewController: UIViewController, RegexCheckable, AlertShowable
     }
     
     private func moveToWelcome(with id: String) {
-        guard let id = idTextField.text else { return }
         let viewController = WelcomeViewController(id: id, nickname: nickname)
         navigationController?.pushViewController(viewController, animated: true)
     }
@@ -188,11 +176,10 @@ private extension LoginViewController {
             .sink { completion in
                 print(completion)
             } receiveValue: { [weak self] flag in
-                guard let self else { return }
-                toggleLoginButton(flag)
+                self?.toggleLoginButton(flag)
             }
             .store(in: &anyCancellables)
-
+        
         idTextField
             .textPublisher
             .receive(on: RunLoop.main)
@@ -243,7 +230,6 @@ private extension LoginViewController {
         
         idTextField.do {
             $0.rightView = idTextFieldRightView
-//            $0.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         }
         
         idClearButton.do {
@@ -254,7 +240,6 @@ private extension LoginViewController {
         
         pwTextField.do {
             $0.rightView = pwTextFieldRightView
-//            $0.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         }
         
         pwShowButton.do {

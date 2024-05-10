@@ -16,9 +16,8 @@ final class LoginViewModel {
     
     lazy var isLoginButtonEnabled: AnyPublisher<Bool, Never> = Publishers
         .CombineLatest($idInput, $pwInput)
-        .map { (id: String, pw: String) in
+        .map { id, pw in
             return !id.isEmpty && !pw.isEmpty
         }
         .eraseToAnyPublisher()
-    
 }
