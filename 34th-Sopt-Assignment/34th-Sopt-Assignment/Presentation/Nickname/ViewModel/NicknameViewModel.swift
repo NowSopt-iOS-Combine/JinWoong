@@ -6,22 +6,24 @@
 //
 
 import Combine
-import CombineCocoa
 
 final class NicknameViewModel {
+    
+    // MARK: - Input Subject
+    
+    private let nicknameTextFieldDidChangeSubject = CurrentValueSubject<String?, Never>("")
+    private let saveButtonDidTapSubject = PassthroughSubject<Void, Never>()
+}
+
+extension NicknameViewModel {
     
     // MARK: - Output
     
     var isSaveEnabled: AnyPublisher<Bool, Never> { setIsSaveEnabled() }
     var isSucceedToSave: AnyPublisher<Result<String, AppError>, Never> { setIsSucceedToSave() }
     
-    // MARK: - Input Subject
-    
-    private let nicknameTextFieldDidChangeSubject = CurrentValueSubject<String?, Never>("")
-    private let saveButtonDidTapSubject = PassthroughSubject<Void, Never>()
-
     // MARK: - Input
-
+    
     func nicknameTextFieldDidChange(_ text: String?) {
         nicknameTextFieldDidChangeSubject.send(text)
     }
