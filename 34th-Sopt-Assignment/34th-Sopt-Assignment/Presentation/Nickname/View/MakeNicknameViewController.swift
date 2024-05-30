@@ -21,6 +21,7 @@ final class MakeNicknameViewController: UIViewController, RegexCheckable, AlertS
     
     private let titleLabel = UILabel()
     private let nicknameTextField = TvingTextField(placeholder: "닉네임", type: .nickname)
+    private let descriptionLabel = UILabel()
     private let saveButton = UIButton()
     
     // MARK: - Property
@@ -66,6 +67,7 @@ private extension MakeNicknameViewController {
         nicknameTextField.textPublisher
             .sink { [weak self] text in
                 self?.viewModel.nicknameTextFieldDidChange(text)
+                self?.descriptionLabel.text = text
             }
             .store(in: &anyCancellables)
         
@@ -125,6 +127,14 @@ private extension MakeNicknameViewController {
             font: .pretendard(weight: .five, size: 23)
         )
         
+        descriptionLabel.do {
+            $0.setText("", color: .white, font: .pretendard(weight: .five, size: 23))
+            $0.backgroundColor = .gray4
+            $0.textAlignment = .center
+            $0.layer.cornerRadius = 10
+            $0.numberOfLines = 0
+        }
+        
         saveButton.do {
             $0.setTitle(title: "저장하기", titleColor: .gray2, font: .pretendard(weight: .six, size: 14))
             $0.setLayer(borderWidth: 1, cornerRadius: 12)
@@ -134,7 +144,7 @@ private extension MakeNicknameViewController {
     }
     
     func setViewHierarchy() {
-        view.addSubviews(titleLabel, nicknameTextField, saveButton)
+        view.addSubviews(titleLabel, nicknameTextField, descriptionLabel, saveButton)
     }
     
     // MARK: - AutoLayout
@@ -152,6 +162,11 @@ private extension MakeNicknameViewController {
             $0.leading.equalTo(titleLabel)
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(Constants.UI.textFieldAndButtonHeight)
+        }
+        
+        descriptionLabel.snp.makeConstraints {
+            $0.top.equalTo(nicknameTextField.snp.bottom).offset(10)
+            $0.horizontalEdges.equalTo(nicknameTextField)
         }
         
         saveButton.snp.makeConstraints {
