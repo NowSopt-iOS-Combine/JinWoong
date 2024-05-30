@@ -74,23 +74,27 @@ private extension LoginViewController {
         idTextField.textPublisher
             .sink { [weak self] text in
                 self?.viewModel.idTextFieldDidChange(text)
-            }.store(in: &anyCancellables)
+            }
+            .store(in: &anyCancellables)
         
         pwTextField.textPublisher
             .sink { [weak self] text in
                 self?.viewModel.passwordTextFieldDidChange(text)
-            }.store(in: &anyCancellables)
+            }
+            .store(in: &anyCancellables)
         
         loginButton.tapPublisher
             .sink { [weak self] _ in
                 self?.viewModel.loginButtonDidTap()
-            }.store(in: &anyCancellables)
+            }
+            .store(in: &anyCancellables)
         
         viewModel.isLoginEnabled
             .receive(on: RunLoop.main)
             .sink { [weak self] flag in
                 self?.toggleLoginButton(flag)
-            }.store(in: &anyCancellables)
+            }
+            .store(in: &anyCancellables)
         
         viewModel.isSucceedToLogin
             .receive(on: RunLoop.main)
@@ -101,7 +105,8 @@ private extension LoginViewController {
                 case .failure(let error):
                     self?.showAlert(title: error.description, message: error.message)
                 }
-            }.store(in: &anyCancellables)
+            }
+            .store(in: &anyCancellables)
     }
     
     func configureAction() {
@@ -110,14 +115,16 @@ private extension LoginViewController {
             .sink { [weak self] _ in
                 self?.idTextField.text = nil
                 self?.idTextField.insertText("")
-            }.store(in: &anyCancellables)
+            }
+            .store(in: &anyCancellables)
         
         pwClearButton.tapPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.pwTextField.text = nil
                 self?.pwTextField.insertText("")
-            }.store(in: &anyCancellables)
+            }
+            .store(in: &anyCancellables)
         
         pwShowButton.tapPublisher
             .receive(on: RunLoop.main)
@@ -126,13 +133,15 @@ private extension LoginViewController {
                 pwTextField.isSecureTextEntry.toggle()
                 let image = UIImage(resource: pwTextField.isSecureTextEntry ? .eyeSlash : .eye)
                 pwShowButton.setImage(image, for: .normal)
-            }.store(in: &anyCancellables)
+            }
+            .store(in: &anyCancellables)
         
         nicknameButton.tapPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.moveToNickname()
-            }.store(in: &anyCancellables)
+            }
+            .store(in: &anyCancellables)
     }
 }
 
@@ -145,7 +154,8 @@ private extension LoginViewController {
     }
     
     func moveToNickname() {
-        let viewController = MakeNicknameViewController()
+        let viewModel = NicknameViewModel()
+        let viewController = MakeNicknameViewController(viewModel: viewModel)
         viewController.delegate = self
         viewController.modalPresentationStyle = .formSheet
         if let sheet = viewController.sheetPresentationController {

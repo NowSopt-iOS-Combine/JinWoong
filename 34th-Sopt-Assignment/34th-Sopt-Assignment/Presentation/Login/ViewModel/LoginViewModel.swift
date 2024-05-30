@@ -6,7 +6,6 @@
 //
 
 import Combine
-import CombineCocoa
 
 final class LoginViewModel {
     
@@ -15,6 +14,8 @@ final class LoginViewModel {
     var isLoginEnabled: AnyPublisher<Bool, Never> { setIsLoginEnabled() }
     var isSucceedToLogin: AnyPublisher<Result<String, AppError>, Never> { setIsSucceedToLogin() }
     
+    // MARK: - Input Subject
+
     private let idTextFieldDidChangeSubject = CurrentValueSubject<String?, Never>("")
     private let passwordTextFieldDidChangeSubject = CurrentValueSubject<String?, Never>("")
     private let loginButtonDidTapSubject = PassthroughSubject<Void, Never>()
