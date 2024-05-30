@@ -18,9 +18,7 @@ final class MakeNicknameViewController: UIViewController, RegexCheckable, AlertS
     // MARK: - Component
     
     private let titleLabel = UILabel()
-    
     private let nicknameTextField = TvingTextField(placeholder: "닉네임", type: .nickname)
-    
     private let saveButton = UIButton()
     
     // MARK: - Property

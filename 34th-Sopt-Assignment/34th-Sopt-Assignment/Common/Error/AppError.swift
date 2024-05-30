@@ -8,11 +8,14 @@
 import Foundation
 
 enum AppError: Error, CustomStringConvertible {
+    case unknown
     case login(error: LoginError)
     case nickname
     
     var description: String {
         switch self {
+        case .unknown:
+            "알 수 없는 에러"
         case .login(let error):
             switch error {
             case .invalidID:
@@ -27,6 +30,8 @@ enum AppError: Error, CustomStringConvertible {
     
     var message: String {
         switch self {
+        case .unknown:
+            "다시 시도해 주세요."
         case .login(let error):
             error.description
         case .nickname:

@@ -16,31 +16,18 @@ final class LoginViewController: UIViewController, RegexCheckable, AlertShowable
     // MARK: - Component
     
     private let titleLabel = UILabel()
-    
     private let idTextField = TvingTextField(placeholder: "아이디", type: .id)
-    
     private let idTextFieldRightView = UIView()
-    
     private let idClearButton = UIButton()
-    
     private let pwTextField = TvingTextField(placeholder: "비밀번호", type: .pw)
-    
     private let pwTextFieldRightView = UIView()
-    
     private let pwClearButton = UIButton()
-    
     private let pwShowButton = UIButton()
-    
     private let loginButton = UIButton()
-    
     private let findIDButton = UIButton()
-    
     private let divider = UIView()
-    
     private let findPWButton = UIButton()
-    
     private let helpButton = UIButton()
-    
     private let nicknameButton = UIButton()
     
     // MARK: - Property
@@ -48,7 +35,6 @@ final class LoginViewController: UIViewController, RegexCheckable, AlertShowable
     private let viewModel: LoginViewModel
     
     private var anyCancellables = Set<AnyCancellable>()
-    
     private var nickname: String?
     
     // MARK: - Initializer
