@@ -27,6 +27,7 @@
 		DE4640382BD7844D00FC13D8 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE46402F2BD7844D00FC13D8 /* Pretendard-Bold.otf */; };
 		DE4640392BD7844D00FC13D8 /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE4640302BD7844D00FC13D8 /* Pretendard-Thin.otf */; };
 		DE46403C2BD7AD6000FC13D8 /* TvingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE46403B2BD7AD6000FC13D8 /* TvingTextField.swift */; };
+		DE93256D2C08E9CF00819A8A /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE93256C2C08E9CF00819A8A /* NicknameViewModel.swift */; };
 		DE9F2C052BD00E0B00E3189D /* MakeNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9F2C042BD00E0B00E3189D /* MakeNicknameViewController.swift */; };
 		DE9F2C082BD0115E00E3189D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9F2C072BD0115E00E3189D /* Constants.swift */; };
 		DE9F2C0A2BD0139400E3189D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9F2C092BD0139400E3189D /* UIColor+Extension.swift */; };
@@ -77,6 +78,7 @@
 		DE46402F2BD7844D00FC13D8 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Bold.otf"; path = "34th-Sopt-Assignment/Resources/Font/Pretendard-Bold.otf"; sourceTree = SOURCE_ROOT; };
 		DE4640302BD7844D00FC13D8 /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pretendard-Thin.otf"; path = "34th-Sopt-Assignment/Resources/Font/Pretendard-Thin.otf"; sourceTree = SOURCE_ROOT; };
 		DE46403B2BD7AD6000FC13D8 /* TvingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvingTextField.swift; sourceTree = "<group>"; };
+		DE93256C2C08E9CF00819A8A /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		DE9F2C042BD00E0B00E3189D /* MakeNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeNicknameViewController.swift; sourceTree = "<group>"; };
 		DE9F2C072BD0115E00E3189D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DE9F2C092BD0139400E3189D /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -238,6 +240,22 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
+		DE93256A2C08E91A00819A8A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DE93256C2C08E9CF00819A8A /* NicknameViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DE93256B2C08E92100819A8A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DE9F2C042BD00E0B00E3189D /* MakeNicknameViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		DE9F2C032BD00DEA00E3189D /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,7 +311,8 @@
 		DEDD67F02BECA06A00D712C4 /* Nickname */ = {
 			isa = PBXGroup;
 			children = (
-				DE9F2C042BD00E0B00E3189D /* MakeNicknameViewController.swift */,
+				DE93256A2C08E91A00819A8A /* ViewModel */,
+				DE93256B2C08E92100819A8A /* View */,
 			);
 			path = Nickname;
 			sourceTree = "<group>";
@@ -496,6 +515,7 @@
 				DEF003312BE04E6400EF73F8 /* Screen.swift in Sources */,
 				DE19548C2BCD644B00070C12 /* AppDelegate.swift in Sources */,
 				DEE84F3A2BDF6086006605CB /* TvingTabBarController.swift in Sources */,
+				DE93256D2C08E9CF00819A8A /* NicknameViewModel.swift in Sources */,
 				DE9F2C162BD0263800E3189D /* RegexCheckable.swift in Sources */,
 				DEF003352BE05DD000EF73F8 /* ImageAndTitleCell.swift in Sources */,
 				DE9F2C182BD0314C00E3189D /* WelcomeViewController.swift in Sources */,

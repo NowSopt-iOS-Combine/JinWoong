@@ -8,6 +8,8 @@
 import Then
 import UIKit
 import SnapKit
+import Combine
+import CombineCocoa
 
 protocol MakeNicknameViewDelegate: AnyObject {
     func configure(nickname: String)
@@ -25,6 +27,21 @@ final class MakeNicknameViewController: UIViewController, RegexCheckable, AlertS
     
     weak var delegate: MakeNicknameViewDelegate?
     
+    private let viewModel: NicknameViewModel
+    
+    private var anyCancellables = Set<AnyCancellable>()
+    
+    // MARK: - Initializer
+    
+    init(viewModel: NicknameViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
@@ -33,25 +50,57 @@ final class MakeNicknameViewController: UIViewController, RegexCheckable, AlertS
         setUI()
         setViewHierarchy()
         setAutoLayout()
+        
+        configureViewModel()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-    
-    // MARK: - Action
-    
-    @objc
-    private func nicknameTextFieldEditingChanged(_ sender: UITextField) {
-        var flag = false
+}
+
+// MARK: - Configure Method
+
+private extension MakeNicknameViewController {
+    func configureViewModel() {
+        nicknameTextField.textPublisher
+            .sink { [weak self] text in
+                self?.viewModel.nicknameTextFieldDidChange(text)
+            }
+            .store(in: &anyCancellables)
         
-        if let input = sender.text, !input.isEmpty {
-            flag = true
-        }
-        toggleSaveButton(flag)
+        saveButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.viewModel.saveButtonDidTap()
+            }
+            .store(in: &anyCancellables)
+        
+        viewModel.isSaveEnabled
+            .receive(on: RunLoop.main)
+            .sink { [weak self] flag in
+                self?.toggleSaveButton(flag)
+            }
+            .store(in: &anyCancellables)
+        
+        viewModel.isSucceedToSave
+            .receive(on: RunLoop.main)
+            .sink { [weak self] result in
+                switch result {
+                case .success(let nickname):
+                    self?.delegate?.configure(nickname: nickname)
+                    self?.dismiss(animated: true)
+                case .failure(let error):
+                    self?.showAlert(title: error.description, message: error.message)
+                }
+            }
+            .store(in: &anyCancellables)
     }
-    
-    private func toggleSaveButton(_ flag: Bool) {
+}
+
+// MARK: - Private Method
+
+private extension MakeNicknameViewController {
+    func toggleSaveButton(_ flag: Bool) {
         let titleColor: UIColor = flag ? .white : .gray2
         let backgroundColor: UIColor = flag ? .tvingRed : .black
         let borderWidth: CGFloat = flag ? 0 : 1
@@ -60,28 +109,6 @@ final class MakeNicknameViewController: UIViewController, RegexCheckable, AlertS
         saveButton.backgroundColor = backgroundColor
         saveButton.layer.borderWidth = borderWidth
         saveButton.isEnabled = flag
-    }
-    
-    @objc
-    private func saveButtonTapped(_ sender: UIButton) {
-        do {
-            let nickname = try checkNickname(nicknameTextField.text)
-            delegate?.configure(nickname: nickname)
-            dismiss(animated: true)
-        } catch let appError as AppError {
-            showAlert(title: "\(appError)", message: "\(appError.message)")
-        } catch {
-            print("\(error.localizedDescription)")
-        }
-    }
-    
-    private func checkNickname(_ input: String?) throws -> String {
-        guard let nickname = input,
-              checkFrom(input: nickname, regex: .nickname)
-        else {
-            throw AppError.nickname
-        }
-        return nickname
     }
 }
 
@@ -98,16 +125,11 @@ private extension MakeNicknameViewController {
             font: .pretendard(weight: .five, size: 23)
         )
         
-        nicknameTextField.do {
-            $0.addTarget(self, action: #selector(nicknameTextFieldEditingChanged), for: .editingChanged)
-        }
-        
         saveButton.do {
             $0.setTitle(title: "저장하기", titleColor: .gray2, font: .pretendard(weight: .six, size: 14))
             $0.setLayer(borderWidth: 1, cornerRadius: 12)
             $0.isEnabled = false
             $0.backgroundColor = .black
-            $0.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         }
     }
     
