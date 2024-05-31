@@ -64,8 +64,8 @@ private extension UnderlineSegmentedControl {
             NSAttributedString.Key.foregroundColor: UIColor.white,
             .font: UIFont.pretendard(weight: .four, size: 17)
         ]
-        setTitleTextAttributes(attributes, for: .normal)
-        setTitleTextAttributes(attributes, for: .selected)
+        setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .normal)
+        setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .selected)
         apportionsSegmentWidthsByContent = true
         selectedSegmentIndex = 0
     }
